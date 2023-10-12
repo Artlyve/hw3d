@@ -32,14 +32,25 @@ namespace Rgph
 			RenderQueuePass( std::move( name ) )
 		{
 			using namespace Bind;
+<<<<<<< HEAD
 			pDepthCube = std::make_shared<DepthCubeTexture>( gfx,size,3 );
+=======
+			depthStencil = std::make_shared<OutputOnlyDepthStencil>( gfx,size,size );
+			pDepthCube = std::make_shared<CubeTargetTexture>( gfx,size,size,3,DXGI_FORMAT::DXGI_FORMAT_R32G32_FLOAT );
+>>>>>>> parent of 7eab495 (trying slope scale cartesian trick)
 			AddBind( VertexShader::Resolve( gfx,"Shadow_VS.cso" ) );
 			AddBind( NullPixelShader::Resolve( gfx ) );
 			AddBind( Stencil::Resolve( gfx,Stencil::Mode::Off ) );
 			AddBind( Blender::Resolve( gfx,false ) );
 			AddBind( std::make_shared<Viewport>( gfx,(float)size,(float)size ) );
+<<<<<<< HEAD
 			AddBind( std::make_shared<Bind::ShadowRasterizer>( gfx,50,2.0f,0.1f ) );
 			RegisterSource( DirectBindableSource<Bind::DepthCubeTexture>::Make( "map",pDepthCube ) );
+=======
+			//AddBind( std::make_shared<Bind::ShadowRasterizer>( gfx,0.0f,2.0f,1.0f ) );
+			AddBind( std::make_shared<Bind::Rasterizer>( gfx,false ) );
+			RegisterSource( DirectBindableSource<Bind::CubeTargetTexture>::Make( "map",pDepthCube ) );
+>>>>>>> parent of 7eab495 (trying slope scale cartesian trick)
 
 			DirectX::XMStoreFloat4x4(
 				&projection,
